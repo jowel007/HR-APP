@@ -39,6 +39,7 @@
                     <div class="card card-primary">
                         <div class="card-header"><h4>Login</h4></div>
 
+                        @include('_message')
                         <div class="card-body">
                             <form method="POST" action="#" class="needs-validation" novalidate="">
                                 <div class="form-group">
