@@ -54,7 +54,7 @@
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" tabindex="1" required autofocus>
+                                    <input id="email" type="email" class="form-control" onblur="duplcateEmail(this)" name="email" value="{{ old('email') }}" tabindex="1" required autofocus>
                                     <div class="invalid-feedback">
                                         Please fill in your email
                                     </div>
@@ -131,5 +131,34 @@
 <!-- Template JS File -->
 <script src="{{ url('public/backend') }}/assets/js/scripts.js"></script>
 <script src="{{ url('public/backend') }}/assets/js/custom.js"></script>
+
+
+<script>
+    function duplcateEmail(elemant){
+        var email = $(elemant).val();
+        // alert(email);
+        $.ajax({
+            type: 'POST',
+            url: "{{ url('checkemail') }}",
+            data: {
+                email:email,
+                _token: '{{ csrf_token() }}'
+            },
+            dataType: "json",
+            success: function (res) {
+                if (res.exists) {
+                    $('.duplicate_message').html("this email is already Taken");
+                }else{
+                    $('.duplicate_message').html("");
+                }
+            },
+            error:function (jqXHR, exception) {
+
+            }
+        })
+    }
+</script>
+
+
 </body>
 </html>
